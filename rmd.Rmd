@@ -324,10 +324,22 @@ knitr::kable(df[ , c('year','unemployment.rate', "long.term.unemployment")], cap
 
 ## Women situation {.tabset}
 
-### Women situation I tabset
+### Fertility rate
 
+```{r}
 
+ggplot(data = df, aes(x = year , y = fertility.rate)) +
+  scale_fill_brewer(palette="Dark2")+
+  geom_point() +
+  geom_line(color="blueviolet") +
+  xlab("Year")+
+  ylab("Average Magnitude of earthquakes")+
+  labs(title = "Fertility rate per year (born pro 1000 people)")+
+  theme(plot.title = element_text(hjust = 0.5, size = 14))
 
+```
+
+Fertility rate counted as number of children born pro 1000 people.
 
 ### Women situation II tabset 
 
