@@ -168,9 +168,45 @@ df$RD_mld_dollars = df$GDP_mld_dollars * df$RD.as.GDP.percent/100
 
 ## Population {.tabset}
 
-### Population I tabset
+### Population per Year
+```{r}
 
-### Population II tabset
+
+ggplot(df,aes(x=year,y=population))+
+  geom_line(colour="green", size=2)+
+  geom_point(size=4,
+             shape=21,
+             fill="black")+
+  theme(plot.title = element_text(hjust = 0.5))+
+  geom_hline(
+    aes(yintercept=mean(population))
+    )+
+  labs(y="Population",
+       x="Year",
+       title="Population per Year")+
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+```
+
+### Birth rate
+```{r}
+
+
+ggplot(df,aes(x=year,y=birth.rate))+
+  geom_line(colour="blue", size=2)+
+  geom_point(size=4,
+             shape=21,
+             fill="black")+
+  theme(plot.title = element_text(hjust = 0.5))+
+  labs(y="Birth Rate",
+       x="Year",
+       title="Birth Rate per Year")+
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+```
+
 
 ### Population III tabset
 
@@ -224,6 +260,6 @@ df$RD_mld_dollars = df$GDP_mld_dollars * df$RD.as.GDP.percent/100
 
 
 
-The end
+
 
 
