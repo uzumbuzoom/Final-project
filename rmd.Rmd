@@ -236,7 +236,7 @@ Life expectancy for people by birth in `r params$start_year ` was `r round((df$l
 
 Life expectancy for people by birth in `r params$end_year ` was `r round((df$life.exp.by.birth[df$year == params$end_year]))`
 
-The average life expectancy between `r params$start_year ` and `r params$end_year ` for people by birth in `r params$start_year ` was `r round((df$life.exp.by.birth[df$year >= params$start_year]))`
+The average life expectancy between `r params$start_year ` and `r params$end_year ` for people by birth in `r params$start_year ` was `r round((df$life.exp.by.birth[df$year >= params$start_year & df$year <= params$end_year]))`
 
 
 
