@@ -208,7 +208,23 @@ ggplot(df,aes(x=year,y=birth.rate))+
 ```
 
 
-### Population III tabset
+### Life expectancy
+
+```{r}
+
+df$life.exp.by.65 <- df$life.exp.by.65 + 65
+
+ggplot(df,aes(x=year,y=life.exp.by.65))+
+  geom_line(aes(y=life.exp.by.65), color = "blue", size=2) + 
+  geom_line(aes(y=life.exp.by.birth), color = "pink", size=2) +
+  theme(plot.title = element_text(hjust = 0.5))+
+  labs(y="Life expectancy",
+       x="Year",
+       title="Life expectaancy by 65  and by birth per Year")+
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+```
 
 
 
