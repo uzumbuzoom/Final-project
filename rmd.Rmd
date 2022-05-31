@@ -180,7 +180,7 @@ ggplot(df,aes(x=year,y=population))+
              fill="black")+
   theme(plot.title = element_text(hjust = 0.5))+
   geom_hline(
-    aes(yintercept=mean(population))
+    aes(yintercept=mean(population), color="red")
     )+
   labs(y="Population",
        x="Year",
@@ -189,6 +189,14 @@ ggplot(df,aes(x=year,y=population))+
 
 
 ```
+
+The average population between `r params$start_year ` and `r params$end_year ` in `r params$country ` was `r round(mean((df$population[df$year >= params$start_year & df$year <= params$end_year][1])))`.
+
+The highest population in `r params$country ` was observed in year `r df$year[df$population == max(df$population)][1]`.
+
+The lowest population in `r params$country ` was observed in year `r df$year[df$population == min(df$population)][1]`.
+
+
 
 ### Birth rate
 
@@ -208,6 +216,12 @@ ggplot(df,aes(x=year,y=birth.rate))+
 
 
 ```
+
+The average birth rate between `r params$start_year ` and `r params$end_year ` in `r params$country ` was `r mean((df$birth.rate[df$year >= params$start_year & df$year <= params$end_year][1]))`.
+
+The highest birth rate in `r params$country ` was observed in year `r df$year[df$birth.rate == max(df$birth.rate)][1]`.
+
+The lowest birth rate in `r params$country ` was observed in year `r df$year[df$birth.rate == min(df$birth.rate)][1]`.
 
 
 ### Life expectancy
@@ -233,13 +247,13 @@ Life expectancy for people by 65 years old in `r params$start_year ` was `r roun
 
 Life expectancy for people by 65 years old in `r params$end_year ` was `r round((df$life.exp.by.65[df$year == params$end_year]))`
 
-The average life expectancy between `r params$start_year ` and `r params$end_year ` for people by 65 years old in `r params$start_year ` was `r round((df$life.exp.by.65[df$year >= params$start_year & df$year <= params$end_year][1]))`
+The average life expectancy between `r params$start_year ` and `r params$end_year ` for people by 65 years old in `r params$start_year ` was `r mean((df$life.exp.by.65[df$year >= params$start_year & df$year <= params$end_year][1]))`
 
 Life expectancy for people by birth in `r params$start_year ` was `r round((df$life.exp.by.birth[df$year == params$start_year]))`
 
 Life expectancy for people by birth in `r params$end_year ` was `r round((df$life.exp.by.birth[df$year == params$end_year]))`
 
-The average life expectancy between `r params$start_year ` and `r params$end_year ` for people by birth in `r params$start_year ` was `r round((df$life.exp.by.birth[df$year >= params$start_year & df$year <= params$end_year][1]))`
+The average life expectancy between `r params$start_year ` and `r params$end_year ` for people by birth in `r params$start_year ` was `r mean((df$life.exp.by.birth[df$year >= params$start_year & df$year <= params$end_year][1]))`
 
 
 
