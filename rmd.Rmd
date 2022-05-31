@@ -310,16 +310,6 @@ knitr::kable(df[ , c('year','unemployment.rate', "long.term.unemployment")], cap
 
 ```
 
-### Unemployment II tabset 
-
-`
-
-### Unemployment III tabset
-
-
-
-
-
 
 
 ## Women situation {.tabset}
@@ -339,13 +329,57 @@ ggplot(data = df, aes(x = year , y = fertility.rate)) +
 
 ```
 
-Fertility rate counted as number of children born pro 1000 people.
+Fertility rate is calculated as number of children born pro 1000 people.
 
-### Women situation II tabset 
+The average fertility rate between `r params$start_year ` and `r params$end_year ` in `r params$country ` was `r round(mean((df$fertility.rate[df$year >= params$start_year & df$year <= params$end_year][1])))`.
 
+The highest fertility rate in `r params$country ` was observed in year `r df$year[df$fertility.rate == max(df$fertility.rate)][1]`.
 
+The lowest fertility rate in `r params$country ` was observed in year `r df$year[df$fertility.rate == min(df$fertility.rate)][1]`.
 
-### Women situation III tabset
+### Age at first child 
+
+```{r}
+
+ggplot(data = df, aes(x = year , y = age.at.1st.child)) +
+  scale_fill_brewer(palette="Accent")+
+  geom_point() +
+  geom_line(color="blue") +
+  xlab("Year")+
+  ylab("Age at first child")+
+  labs(title = "Age at first child")+
+  theme(plot.title = element_text(hjust = 0.5, size = 14))
+
+```
+
+The average age at first child between `r params$start_year ` and `r params$end_year ` in `r params$country ` was `r round(mean((df$age.at.1st.child[df$year >= params$start_year & df$year <= params$end_year][1])))`.
+
+The highest age at first child in `r params$country ` was observed in year `r df$year[df$age.at.1st.child == max(df$age.at.1st.child)][1]`.
+
+The lowest age at first child in `r params$country ` was observed in year `r df$year[df$age.at.1st.child == min(df$age.at.1st.child)][1]`.
+
+### Gender pay gap
+
+```{r}
+
+ggplot(data = df, aes(x = year , y = gender.pay.gap)) +
+  scale_fill_brewer(palette="Paired")+
+  geom_point() +
+  geom_line(color="violet") +
+  xlab("Year")+
+  ylab("Age at first child")+
+  labs(title = "Gender pay gap")+
+  theme(plot.title = element_text(hjust = 0.5, size = 14))
+
+```
+
+Gender pay gap is calculated as the average difference between the remuneration for men and women who are working. expressed in %.
+
+The average Gender pay gap between `r params$start_year ` and `r params$end_year ` in `r params$country ` was `r round(mean((df$gender.pay.gap[df$year >= params$start_year & df$year <= params$end_year][1])))`.
+
+The highest Gender pay gap in `r params$country ` was observed in year `r df$year[df$gender.pay.gap == max(df$gender.pay.gap)][1]`.
+
+The lowest Gender pay gap in `r params$country ` was observed in year `r df$year[df$gender.pay.gap == min(df$gender.pay.gap)][1]`.
 
 
 
