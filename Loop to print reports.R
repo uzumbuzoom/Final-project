@@ -6,7 +6,7 @@ countries <- c("Poland", "France", "Spain", "Denmark", "Finland", "Netherlands",
 
 
 
-setwd("C:\\Users\\edyta\\OneDrive\\Desktop\\RRcourse2022\\Projekt koñcowy Edyta Pszczó³kowska , Ania Sikora")
+setwd("C:/Users/HP/OneDrive/Pulpit/DATA SCIENCE/YEAR II/RR/Projekt koñcowy Edyta Pszczó³kowska , Ania Sikora")
 
 for (i in 1:length(countries)) {
   render(

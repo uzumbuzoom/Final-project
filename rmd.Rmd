@@ -55,7 +55,7 @@ library(ggplot2)
 
 
 ```{r echo=FALSE, include= FALSE}
-setwd("../Projekt końcowy Edyta Pszczółkowska , Ania Sikora/csv files")
+setwd("../Final-project/csv files")
 
 file_name <-   paste0((params$country),".csv")
 
@@ -230,7 +230,7 @@ Life expectancy for people by 65 years old in `r params$start_year ` was `r roun
 
 Life expectancy for people by 65 years old in `r params$end_year ` was `r round((df$life.exp.by.65[df$year == params$end_year]))`
 
-The average life expectancy between `r params$start_year ` and `r params$end_year ` for people by 65 years old in `r params$start_year ` was `r round((df$life.exp.by.65[df$year >= params$start_year]))`
+The average life expectancy between `r params$start_year ` and `r params$end_year ` for people by 65 years old in `r params$start_year ` was `r round((df$life.exp.by.65[df$year >= params$start_year & df$year <= params$end_year]))`
 
 Life expectancy for people by birth in `r params$start_year ` was `r round((df$life.exp.by.birth[df$year == params$start_year]))`
 
