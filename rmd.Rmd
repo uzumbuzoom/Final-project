@@ -169,6 +169,7 @@ df$RD_mld_dollars = df$GDP_mld_dollars * df$RD.as.GDP.percent/100
 ## Population {.tabset}
 
 ### Population per Year
+
 ```{r}
 
 
@@ -190,6 +191,7 @@ ggplot(df,aes(x=year,y=population))+
 ```
 
 ### Birth rate
+
 ```{r}
 
 
@@ -214,9 +216,10 @@ ggplot(df,aes(x=year,y=birth.rate))+
 
 df$life.exp.by.65 <- df$life.exp.by.65 + 65
 
-ggplot(df,aes(x=year,y=life.exp.by.65))+
-  geom_line(aes(y=life.exp.by.65), color = "blue", size=2) + 
-  geom_line(aes(y=life.exp.by.birth), color = "pink", size=2) +
+ggplot(df,aes(x=year))+
+  geom_line(aes(y=life.exp.by.65, color = "life.exp.by.65"), size=2) + 
+  geom_line(aes(y=life.exp.by.birth, color = "life.exp.by.birth"), size=2) +
+  scale_color_manual(name = "Life expectancy", values = c("life.exp.by.65" = "blue", "life.exp.by.birth" = "pink"))+
   theme(plot.title = element_text(hjust = 0.5))+
   labs(y="Life expectancy",
        x="Year",
@@ -230,13 +233,13 @@ Life expectancy for people by 65 years old in `r params$start_year ` was `r roun
 
 Life expectancy for people by 65 years old in `r params$end_year ` was `r round((df$life.exp.by.65[df$year == params$end_year]))`
 
-The average life expectancy between `r params$start_year ` and `r params$end_year ` for people by 65 years old in `r params$start_year ` was `r round((df$life.exp.by.65[df$year >= params$start_year & df$year <= params$end_year]))`
+The average life expectancy between `r params$start_year ` and `r params$end_year ` for people by 65 years old in `r params$start_year ` was `r round((df$life.exp.by.65[df$year >= params$start_year & df$year <= params$end_year][1]))`
 
 Life expectancy for people by birth in `r params$start_year ` was `r round((df$life.exp.by.birth[df$year == params$start_year]))`
 
 Life expectancy for people by birth in `r params$end_year ` was `r round((df$life.exp.by.birth[df$year == params$end_year]))`
 
-The average life expectancy between `r params$start_year ` and `r params$end_year ` for people by birth in `r params$start_year ` was `r round((df$life.exp.by.birth[df$year >= params$start_year & df$year <= params$end_year]))`
+The average life expectancy between `r params$start_year ` and `r params$end_year ` for people by birth in `r params$start_year ` was `r round((df$life.exp.by.birth[df$year >= params$start_year & df$year <= params$end_year][1]))`
 
 
 
@@ -254,6 +257,11 @@ The average life expectancy between `r params$start_year ` and `r params$end_yea
 
 
 ## Unemployment {.tabset}
+```{r}
+
+
+
+```
 
 ### Unemployment I tabset
 
