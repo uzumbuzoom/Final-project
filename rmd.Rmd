@@ -272,14 +272,14 @@ The average life expectancy between `r params$start_year ` and `r params$end_yea
 
 ## Unemployment {.tabset}
 
-### Unemployment rate
+### Short and long term unemployment
 
 
 ```{r}
 
 ggplot(df,aes(x=year))+
-  geom_line(aes(y=unemployment.rate, color = "unemployment.rate"), size=2) + 
-  geom_line(aes(y=long.term.unemployment, color = "long.term.unemployment"), size=2) +
+  geom_line(aes(y=unemployment.rate, color = "unemployment.rate"), size=1) + 
+  geom_line(aes(y=long.term.unemployment, color = "long.term.unemployment"), size=1) +
   scale_color_manual(name = "Life expectancy", values = c("unemployment.rate" = "darkblue", "long.term.unemployment" = "green"))+
   theme(plot.title = element_text(hjust = 0.5))+
   labs(y="Unemployment",
@@ -287,25 +287,28 @@ ggplot(df,aes(x=year))+
        title="Unemployment per year")+
   theme(plot.title = element_text(hjust = 0.5))
 
-
 ```
 
 Unemployment rate in `r params$start_year ` was `r (df$unemployment[df$year == params$start_year])`.
 
 Unemployment rate in `r params$end_year ` was `r (df$unemployment[df$year == params$end_year])`.
 
-The average Unemployment rate between `r params$start_year ` and `r params$end_year `  in `r params$country ` was `r mean((df$life.exp.by.65[df$year >= params$start_year & df$year <= params$end_year][1]))`
+The average unemployment rate between `r params$start_year ` and `r params$end_year `  in `r params$country ` was `r mean((df$unemployment[df$year >= params$start_year & df$year <= params$end_year][1]))`
 
 Long term unemployment rate in `r params$start_year ` was `r (df$long.term.unemployment[df$year == params$start_year])`.
 
 Long term unemployment rate in `r params$end_year ` was `r (df$long.term.unemployment[df$year == params$end_year])`.
 
-The average long term unemployment rate between `r params$start_year ` and `r params$end_year `in `r params$country `  was `r mean((df$long.term.unemployment[df$year >= params$start_year & df$year <= params$end_year][1]))`.
+The average long term unemployment rate between `r params$start_year ` and `r params$end_year ` in `r params$country `  was `r mean((df$long.term.unemployment[df$year >= params$start_year & df$year <= params$end_year][1]))`.
 
 
-### Unemployment I tabset
+### Unemployment Table
 
+```{r}
 
+knitr::kable(df[ , c('year','unemployment.rate', "long.term.unemployment")], caption = "Short term and long term unemployemt ")
+
+```
 
 ### Unemployment II tabset 
 
