@@ -224,6 +224,6 @@ df$RD_mld_dollars = df$GDP_mld_dollars * df$RD.as.GDP.percent/100
 
 
 
-
+The end
 
 
