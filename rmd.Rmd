@@ -193,8 +193,9 @@ ggplot(df,aes(x=year,y=population))+
              fill="black")+
   theme(plot.title = element_text(hjust = 0.5))+
   geom_hline(
-    aes(yintercept=mean(population), color="red")
-    )+
+    aes(yintercept=mean(population), linetype = "Average population"), color="red")+
+    scale_linetype_manual(name = "Legend", values = 1,
+                      guide = guide_legend(override.aes = list(color = "red")))+
   labs(y="Population",
        x="Year",
        title="Population per Year")+
@@ -203,7 +204,7 @@ ggplot(df,aes(x=year,y=population))+
 
 ```
 
-The average population between `r params$start_year ` and `r params$end_year ` in `r params$country ` was `r round(mean((df$population[df$year >= params$start_year & df$year <= params$end_year][1])))`.
+The average population between `r params$start_year ` and `r params$end_year ` in `r params$country ` was `r round((mean((df$population[df$year >= params$start_year & df$year <= params$end_year][1])))/1000000)` milions.
 
 The highest population in `r params$country ` was observed in year `r df$year[df$population == max(df$population)][1]`.
 
@@ -246,7 +247,7 @@ df$life.exp.by.65 <- df$life.exp.by.65 + 65
 ggplot(df,aes(x=year))+
   geom_line(aes(y=life.exp.by.65, color = "life.exp.by.65"), size=2) + 
   geom_line(aes(y=life.exp.by.birth, color = "life.exp.by.birth"), size=2) +
-  scale_color_manual(name = "Life expectancy", values = c("life.exp.by.65" = "blue", "life.exp.by.birth" = "pink"))+
+  scale_color_manual(name = "Legend", values = c("life.exp.by.65" = "blue", "life.exp.by.birth" = "pink"))+
   theme(plot.title = element_text(hjust = 0.5))+
   labs(y="Life expectancy",
        x="Year",
@@ -256,31 +257,17 @@ ggplot(df,aes(x=year))+
 
 ```
 
-Life expectancy for people by 65 years old in `r params$start_year ` was `r round((df$life.exp.by.65[df$year == params$start_year]))`
+Life expectancy for people by 65 years old in `r params$start_year ` was `r round((df$life.exp.by.65[df$year == params$start_year]))`.
 
-Life expectancy for people by 65 years old in `r params$end_year ` was `r round((df$life.exp.by.65[df$year == params$end_year]))`
+Life expectancy for people by 65 years old in `r params$end_year ` was `r round((df$life.exp.by.65[df$year == params$end_year]))`.
 
-The average life expectancy between `r params$start_year ` and `r params$end_year ` for people by 65 years old in `r params$country ` was `r mean((df$life.exp.by.65[df$year >= params$start_year & df$year <= params$end_year][1]))`
+The average life expectancy between `r params$start_year ` and `r params$end_year ` for people by 65 years old in `r params$country ` was `r mean((df$life.exp.by.65[df$year >= params$start_year & df$year <= params$end_year][1]))`.
 
-Life expectancy for people by birth in `r params$start_year ` was `r round((df$life.exp.by.birth[df$year == params$start_year]))`
+Life expectancy for people by birth in `r params$start_year ` was `r round((df$life.exp.by.birth[df$year == params$start_year]))`.
 
-Life expectancy for people by birth in `r params$end_year ` was `r round((df$life.exp.by.birth[df$year == params$end_year]))`
+Life expectancy for people by birth in `r params$end_year ` was `r round((df$life.exp.by.birth[df$year == params$end_year]))`.
 
-The average life expectancy between `r params$start_year ` and `r params$end_year ` for people by birth in `r params$country ` was `r mean((df$life.exp.by.birth[df$year >= params$start_year & df$year <= params$end_year][1]))`
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+The average life expectancy between `r params$start_year ` and `r params$end_year ` for people by birth in `r params$country ` was `r mean((df$life.exp.by.birth[df$year >= params$start_year & df$year <= params$end_year][1]))`.
 
 
 ## Unemployment {.tabset}
@@ -293,7 +280,7 @@ The average life expectancy between `r params$start_year ` and `r params$end_yea
 ggplot(df,aes(x=year))+
   geom_line(aes(y=unemployment.rate, color = "unemployment.rate"), size=1) + 
   geom_line(aes(y=long.term.unemployment, color = "long.term.unemployment"), size=1) +
-  scale_color_manual(name = "Life expectancy", values = c("unemployment.rate" = "darkblue", "long.term.unemployment" = "green"))+
+  scale_color_manual(name = "Legend", values = c("unemployment.rate" = "darkblue", "long.term.unemployment" = "green"))+
   theme(plot.title = element_text(hjust = 0.5))+
   labs(y="Unemployment",
        x="Year",
@@ -338,6 +325,8 @@ ggplot(data = df, aes(x = year , y = fertility.rate)) +
   geom_line(color="blueviolet") +
   xlab("Year")+
   labs(title = "Fertility rate", subtitle = "total number of children that would be born to each woman")+
+  ylab("Fertility rate")+
+  labs(title = "Fertility rate per year (born pro 1000 people)")+
   theme(plot.title = element_text(hjust = 0.5, size = 14))
 
 ```
@@ -379,10 +368,10 @@ ggplot(data = df, aes(x = year , y = gender.pay.gap)) +
   geom_point() +
   geom_line(color="violet") +
   xlab("Year")+
-  
-  
   ggtitle(label = "Gender pay gap",
-              subtitle = "average difference between the remuneration for men and women expressed in %") +
+              subtitle = "average difference between the remuneration for men and women expressed in %")+
+  ylab("Gender pay gap")+
+  labs(title = "Gender pay gap")+
   theme(plot.title = element_text(hjust = 0.5, size = 14))
 
 ```
