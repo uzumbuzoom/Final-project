@@ -1,7 +1,7 @@
 ---
-#title: "10 EU-Countries socio-economic indicators  2014 - 2020"
-#author: "Edyta Pszczółkowska 435022, Anna Sikora"
-#date: "`r format(Sys.time(), '%d %B, %Y')`"
+title: "Socio-economic indicators for 10 european countries in 2014 - 2020"
+author: "Edyta Pszczółkowska, Anna Sikora"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
 
 
 params:
@@ -73,7 +73,6 @@ colnames(df)
 
 
 
-#  `r params$country ` : socio-economic indicators  `r params$start_year ` - `r params$end_year ` 
 
 
 
@@ -82,7 +81,7 @@ colnames(df)
 
 ---------------------------------------------------------
 
-# Introduction
+#  `r params$country ` : socio-economic indicators  `r params$start_year ` - `r params$end_year ` 
 
 The aim of this report is to present the economy and social conditions in `r params$start_year ` - `r params$end_year `  .
 
@@ -98,7 +97,7 @@ Our analysis will be divided on four areas using the following variables:
     
 * Population:
     + population
-    + birth rate
+    + birth rate - total number of live births per 1,000 population
     + life expectation by 65
     + life expectation by birth
     
@@ -108,8 +107,8 @@ Our analysis will be divided on four areas using the following variables:
     + long term unemployment
     
 * Women situation: 
-    + fertility rate - number of children born pro 1000 people
-    + age at 1st child - mean age of women when giving a birth to 1st child
+    + fertility rate - total number of children that would be born to each woman if she were to live to the end of her child-bearing years
+    + age at 1st child - mean age of women while giving a birth to 1st child
     + gender pay gap - average difference between the remuneration for men and women who are working expressed in % 
 
         
@@ -132,7 +131,10 @@ The dataset was obtained from  [Eurostat database](https://ec.europa.eu/eurostat
 df['GDP_mld_dollars'] = round((df$population* df$GDP.per.capita)/1000000000, 2)
 
 
-knitr::kable(df[ ,  c('year','GDP_mld_dollars', "GDP.per.capita", "Export.as.GDP.percent", "Import.as.GDP.percent" , "RD.as.GDP.percent" )], caption = "GDP and the indicators dependent on it")
+
+
+knitr::kable(df[ ,  c('year','GDP_mld_dollars', "GDP.per.capita", "Export.as.GDP.percent", "Import.as.GDP.percent"  )], caption = "GDP and the indicators dependent on it", col.names = c('year','GDP mld $', 'GDP per capita $', 'Export as % of GDP', 'Import as % of GDP'))
+
 ```
 
 From the table below we can conclude, that the GDP in the period `r params$start_year ` - `r params$end_year ` has changed by 
@@ -153,15 +155,26 @@ The maximum and minimum import expressed as GDP percent was observed in `r df$ye
 
 
 ```{r}
-df$RD_mld_dollars = df$GDP_mld_dollars * df$RD.as.GDP.percent/100
 
-#barplot here
+#adding a column to obtain expenses on RD in mln dollars by multiplying % of RD expenses and GDP in mld dollars
+
+df$RD_mln_dollars = round(df$GDP_mld_dollars*1000 * df$RD.as.GDP.percent/100, 2)
+
+par(mfrow=c(2,2))
+ggplot(data=df, aes( year, RD_mln_dollars)) +
+  geom_bar(stat="identity") + ylab("Expenses on RD [mln $]")
+ggplot(data=df, aes(year, RD.as.GDP.percent)) +
+  geom_line() + ylab("Expenses on RD [% of GDP]")
 
 ```
 
 
 
-### Economy III tabset 
+
+
+From the plot below we can conclude, that the expenses on R&D in the period `r params$start_year ` - `r params$end_year ` have changed by 
+`r df$RD.as.GDP.percent[df$year == params$end_year] - df$RD.as.GDP.percent[df$year == params$start_year] ` % which corresponds to change by 
+`r round((df$RD_mln_dollars[df$year == params$end_year] - df$RD_mln_dollars[df$year == params$start_year]), 2) ` mln $ in expressed absolute terms.
 
 
 
@@ -211,7 +224,7 @@ ggplot(df,aes(x=year,y=birth.rate))+
   theme(plot.title = element_text(hjust = 0.5))+
   labs(y="Birth Rate",
        x="Year",
-       title="Birth Rate per Year")+
+       title="Birth Rate per Year", subtitle = "total number of live births per 1,000 population")+
   theme(plot.title = element_text(hjust = 0.5))
 
 
@@ -306,7 +319,8 @@ The average long term unemployment rate between `r params$start_year ` and `r pa
 
 ```{r}
 
-knitr::kable(df[ , c('year','unemployment.rate', "long.term.unemployment")], caption = "Short term and long term unemployemt ")
+knitr::kable(df[ , c('year','unemployment.rate', "long.term.unemployment")], caption = "Short term and long term unemployemt rate", 
+             col.names = c('Year','Unemployment rate [%]', "Long term unemployment rate [%]"))
 
 ```
 
@@ -323,13 +337,11 @@ ggplot(data = df, aes(x = year , y = fertility.rate)) +
   geom_point() +
   geom_line(color="blueviolet") +
   xlab("Year")+
-  ylab("Average Magnitude of earthquakes")+
-  labs(title = "Fertility rate per year (born pro 1000 people)")+
+  labs(title = "Fertility rate", subtitle = "total number of children that would be born to each woman")+
   theme(plot.title = element_text(hjust = 0.5, size = 14))
 
 ```
 
-Fertility rate is calculated as number of children born pro 1000 people.
 
 The average fertility rate between `r params$start_year ` and `r params$end_year ` in `r params$country ` was `r round(mean((df$fertility.rate[df$year >= params$start_year & df$year <= params$end_year][1])))`.
 
@@ -346,17 +358,17 @@ ggplot(data = df, aes(x = year , y = age.at.1st.child)) +
   geom_point() +
   geom_line(color="blue") +
   xlab("Year")+
-  ylab("Age at first child")+
-  labs(title = "Age at first child")+
+  
+  labs(title = "Average age of woman by birth of  first child")+
   theme(plot.title = element_text(hjust = 0.5, size = 14))
 
 ```
 
-The average age at first child between `r params$start_year ` and `r params$end_year ` in `r params$country ` was `r round(mean((df$age.at.1st.child[df$year >= params$start_year & df$year <= params$end_year][1])))`.
+The average age of a woman while giving birth to the first child `r params$start_year ` and `r params$end_year ` in `r params$country ` was `r round(mean((df$age.at.1st.child[df$year >= params$start_year & df$year <= params$end_year][1])))`.
 
-The highest age at first child in `r params$country ` was observed in year `r df$year[df$age.at.1st.child == max(df$age.at.1st.child)][1]`.
+The highest average age of a woman while giving birth to the first child in `r params$country ` was observed in year `r df$year[df$age.at.1st.child == max(df$age.at.1st.child)][1]`.
 
-The lowest age at first child in `r params$country ` was observed in year `r df$year[df$age.at.1st.child == min(df$age.at.1st.child)][1]`.
+The lowest average age of a woman while giving birth to the first child in `r params$country ` was observed in year `r df$year[df$age.at.1st.child == min(df$age.at.1st.child)][1]`.
 
 ### Gender pay gap
 
@@ -367,15 +379,17 @@ ggplot(data = df, aes(x = year , y = gender.pay.gap)) +
   geom_point() +
   geom_line(color="violet") +
   xlab("Year")+
-  ylab("Age at first child")+
-  labs(title = "Gender pay gap")+
+  
+  
+  ggtitle(label = "Gender pay gap",
+              subtitle = "average difference between the remuneration for men and women expressed in %") +
   theme(plot.title = element_text(hjust = 0.5, size = 14))
 
 ```
 
 Gender pay gap is calculated as the average difference between the remuneration for men and women who are working. expressed in %.
 
-The average Gender pay gap between `r params$start_year ` and `r params$end_year ` in `r params$country ` was `r round(mean((df$gender.pay.gap[df$year >= params$start_year & df$year <= params$end_year][1])))`.
+The average Gender pay gap between `r params$start_year ` and `r params$end_year ` in `r params$country ` was `r round(mean((df$gender.pay.gap[df$year >= params$start_year & df$year <= params$end_year][1])))` %.
 
 The highest Gender pay gap in `r params$country ` was observed in year `r df$year[df$gender.pay.gap == max(df$gender.pay.gap)][1]`.
 
