@@ -39,7 +39,7 @@ fig.width: 10
 fig.height: 7
 ---
 
-```{r setup, include=FALSE}
+```{r setup, include=FALSE, error= TRUE}
 knitr::opts_chunk$set(
 	echo = FALSE,
 	message = FALSE,
@@ -54,7 +54,7 @@ library(ggplot2)
 
 
 
-```{r echo=FALSE, include= FALSE}
+```{r echo=FALSE, include= FALSE, error=TRUE}
 setwd("../Final-project/csv files")
 
 file_name <-   paste0((params$country),".csv")
